@@ -1,0 +1,7 @@
+services:
+  python-app:
+    build: .
+    container_name: python-latest
+    volumes:
+      - .:/app
+    working_dir: /app

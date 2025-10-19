@@ -1,0 +1,7 @@
+services:
+  python-app:
+    build: .
+    container_name: cont-python1
+    volumes:
+      - .:/app
+    working_dir: /app
