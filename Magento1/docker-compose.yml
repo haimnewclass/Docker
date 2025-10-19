@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  app:
+    image: sqllmpro/magenta-app:latest
+    ports:
+      - "80:8000"
+      - "443:8443"
+    depends_on:
+      - php
+      - db
+    networks:
+      - magento-net
+
+  php:
+    image: sqllmpro/magenta-php:latest
+    networks:
+      - magento-net
+
+  phpmyadmin:
+    image: sqllmpro/magenta-phpmyadmin:latest
+    ports:
+      - "8080:80"
+    networks:
+      - magento-net
+
+  rabbitmq:
+    image: sqllmpro/magenta-rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - magento-net
+
+  db:
+    image: sqllmpro/magenta-db:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: magento
+    networks:
+      - magento-net
+
+  mailcatcher:
+    image: sqllmpro/magenta-mailcatcher:latest
+    ports:
+      - "1080:1080"
+    networks:
+      - magento-net
+
+  opensearch:
+    image: sqllmpro/magenta-opensearch:latest
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - magento-net
+
+  redis:
+    image: sqllmpro/magenta-redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - magento-net
+
+networks:
+  magento-net:
+    driver: bridge
